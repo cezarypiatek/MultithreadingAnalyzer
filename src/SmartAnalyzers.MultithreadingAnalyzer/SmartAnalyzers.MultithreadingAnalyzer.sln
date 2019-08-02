@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAnalyzers.MultithreadingAnalyzer", "SmartAnalyzers.MultithreadingAnalyzer\SmartAnalyzers.MultithreadingAnalyzer\SmartAnalyzers.MultithreadingAnalyzer.csproj", "{7FE64323-69FA-4DFC-939F-D53656D6499D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAnalyzers.MultithreadingAnalyzer.Test", "SmartAnalyzers.MultithreadingAnalyzer\SmartAnalyzers.MultithreadingAnalyzer.Test\SmartAnalyzers.MultithreadingAnalyzer.Test.csproj", "{06CF8843-8339-4A8D-9E7C-232DA9FCD2AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartAnalyzers.MultithreadingAnalyzer.Vsix", "SmartAnalyzers.MultithreadingAnalyzer\SmartAnalyzers.MultithreadingAnalyzer.Vsix\SmartAnalyzers.MultithreadingAnalyzer.Vsix.csproj", "{BD8FF74D-66D5-4D45-B11B-ACF7749094B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7FE64323-69FA-4DFC-939F-D53656D6499D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FE64323-69FA-4DFC-939F-D53656D6499D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FE64323-69FA-4DFC-939F-D53656D6499D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FE64323-69FA-4DFC-939F-D53656D6499D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06CF8843-8339-4A8D-9E7C-232DA9FCD2AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06CF8843-8339-4A8D-9E7C-232DA9FCD2AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06CF8843-8339-4A8D-9E7C-232DA9FCD2AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06CF8843-8339-4A8D-9E7C-232DA9FCD2AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD8FF74D-66D5-4D45-B11B-ACF7749094B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD8FF74D-66D5-4D45-B11B-ACF7749094B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD8FF74D-66D5-4D45-B11B-ACF7749094B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD8FF74D-66D5-4D45-B11B-ACF7749094B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57CC87AE-6356-4AC4-B997-6544B575EDC0}
+	EndGlobalSection
+EndGlobal
