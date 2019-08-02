@@ -10,7 +10,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class LockOnPubliclyAccessibleInstanceAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "EX1000";
+        public const string DiagnosticId = "MT1000";
         internal static readonly LocalizableString Title = "Lock on publicly accessible instance";
         internal static readonly LocalizableString MessageFormat = "Locking on publicly accessible instance can cause a deadlock";
         internal const string Category = "Locking";
