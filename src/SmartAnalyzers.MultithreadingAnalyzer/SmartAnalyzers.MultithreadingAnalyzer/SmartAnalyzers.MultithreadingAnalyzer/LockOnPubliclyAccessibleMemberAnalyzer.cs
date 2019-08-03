@@ -31,9 +31,9 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             {
 
                 var symbolInfo = context.SemanticModel.GetSymbolInfo(expression);
-                if (symbolInfo.Symbol is IPropertySymbol propertySymbol)
+                if (symbolInfo.Symbol is IPropertySymbol || symbolInfo.Symbol is IFieldSymbol)
                 {
-                    if (propertySymbol.DeclaredAccessibility != Accessibility.Private)
+                    if (symbolInfo.Symbol.DeclaredAccessibility != Accessibility.Private)
                     {
                         context.ReportDiagnostic(Diagnostic.Create(Rule, expression.GetLocation()));
                     }
