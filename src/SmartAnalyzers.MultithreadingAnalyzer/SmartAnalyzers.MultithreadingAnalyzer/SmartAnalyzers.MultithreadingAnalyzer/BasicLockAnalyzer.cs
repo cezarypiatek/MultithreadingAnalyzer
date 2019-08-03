@@ -24,11 +24,16 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             TryToReportViolation(context, lockStatement?.Expression);
         }
 
+        private static readonly MethodDescriptor[] LockAcquireMethods = 
+        {
+            new MethodDescriptor("System.Threading.Monitor.Enter"),
+            new MethodDescriptor("System.Threading.Monitor.TryEnter")
+        };
+
         private void AnalyzeMonitorEnterInvocation(SyntaxNodeAnalysisContext context)
         {
             var invocationExpression = (InvocationExpressionSyntax)context.Node;
-            if (ExpressionHelpers.IsInvocationOf(invocationExpression, "Monitor.Enter") ||
-                ExpressionHelpers.IsInvocationOf(invocationExpression, "Monitor.TryEnter"))
+            if (ExpressionHelpers.IsInvocationOf(context, LockAcquireMethods))
             {
                 var lockParameterExpression = invocationExpression.ArgumentList?.Arguments.FirstOrDefault()?.Expression;
                 TryToReportViolation(context, lockParameterExpression);

@@ -12,7 +12,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
     public class CopiedSpinLockAnalyzer : DiagnosticAnalyzer
     {
         public const string DiagnosticId = "MT1004";
-        internal static readonly LocalizableString Title = "Copied SpinLock is useless";
+        internal static readonly LocalizableString Title = "Passed by value SpinLock is useless";
         internal static readonly LocalizableString MessageFormat = "SpinLock is a struct and passing it by value results with copy which makes SpinLock useless.";
         internal const string Category = "Locking";
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Immutable;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -9,7 +10,7 @@ using SmartAnalyzers.MultithreadingAnalyzer.Utils;
 namespace SmartAnalyzers.MultithreadingAnalyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class AbandonLockAnalyzer : DiagnosticAnalyzer
+    public partial class AbandonLockAnalyzer : DiagnosticAnalyzer
     {
         public const string DiagnosticId = "MT1003";
         internal static readonly LocalizableString Title = "Invoking Monitor.Exit without guarantee of execution";
@@ -28,10 +29,17 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             context.RegisterSyntaxNodeAction(AnalyzeMonitorMethodInvocation, SyntaxKind.InvocationExpression);
         }
 
+        private static readonly MethodDescriptor[] MethodThatRequireFinally = 
+        {
+            new MethodDescriptor("System.Threading.Monitor.Exit"),
+            new MethodDescriptor("System.Threading.SpinLock.Exit"),
+            new MethodDescriptor("System.Threading.Mutex.ReleaseMutex")
+        };
+
         private void AnalyzeMonitorMethodInvocation(SyntaxNodeAnalysisContext context)
         {
             var invocationExpression = (InvocationExpressionSyntax)context.Node;
-            if (ExpressionHelpers.IsInvocationOf(invocationExpression, "Monitor.Exit"))
+            if (ExpressionHelpers.IsInvocationOf(context, MethodThatRequireFinally))
             {
                 TryReportViolation(context, invocationExpression.Parent, invocationExpression);
             }
