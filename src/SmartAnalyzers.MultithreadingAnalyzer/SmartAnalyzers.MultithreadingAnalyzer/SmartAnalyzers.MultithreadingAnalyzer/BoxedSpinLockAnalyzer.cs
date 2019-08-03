@@ -32,18 +32,18 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
         private void AnalyzeProperty(SyntaxNodeAnalysisContext context)
         {
             var fieldDeclaration = (PropertyDeclarationSyntax)context.Node;
-            TryToReportViolation(context, fieldDeclaration.Modifiers, fieldDeclaration);
+            TryToReportViolation(context, fieldDeclaration.Modifiers, fieldDeclaration, fieldDeclaration.Type);
         }
 
         private void AnalyzeField(SyntaxNodeAnalysisContext context)
         {
             var fieldDeclaration = (FieldDeclarationSyntax)context.Node;
-            TryToReportViolation(context, fieldDeclaration.Modifiers, fieldDeclaration);
+            TryToReportViolation(context, fieldDeclaration.Modifiers, fieldDeclaration, fieldDeclaration.Declaration.Type);
         }
 
-        private static void TryToReportViolation(SyntaxNodeAnalysisContext context, SyntaxTokenList modifiers, SyntaxNode memberDeclaration)
+        private static void TryToReportViolation(SyntaxNodeAnalysisContext context, SyntaxTokenList modifiers, SyntaxNode memberDeclaration, TypeSyntax fieldDeclarationType)
         {
-            if (modifiers.Any(x => x.Kind() == SyntaxKind.ReadOnlyKeyword))
+            if (fieldDeclarationType.ToFullString().Trim().EndsWith("SpinLock") &&  modifiers.Any(x => x.Kind() == SyntaxKind.ReadOnlyKeyword))
             {
                 context.ReportDiagnostic(Diagnostic.Create(Rule, memberDeclaration.GetLocation()));
             }
