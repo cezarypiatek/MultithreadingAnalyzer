@@ -10,8 +10,6 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class LockOnPubliclyAccessibleMemberAnalyzer : BasicLockAnalyzer
     {
-        private static readonly Accessibility[] publicVisibilities = new[] { Accessibility.Internal, Accessibility.Public };
-
         public const string DiagnosticId = "MT1001";
         internal static readonly LocalizableString Title = "Lock on publicly accessible member";
         internal static readonly LocalizableString MessageFormat = "Locking on publicly accessible member can cause a deadlock'";
@@ -35,7 +33,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
                 var symbolInfo = context.SemanticModel.GetSymbolInfo(expression);
                 if (symbolInfo.Symbol is IPropertySymbol propertySymbol)
                 {
-                    if (publicVisibilities.Contains(propertySymbol.DeclaredAccessibility))
+                    if (propertySymbol.DeclaredAccessibility != Accessibility.Private)
                     {
                         context.ReportDiagnostic(Diagnostic.Create(Rule, expression.GetLocation()));
                     }

@@ -43,7 +43,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
         private static void TryToReportViolation(SyntaxNodeAnalysisContext context, SyntaxNode memberDeclaration,
             TypeSyntax fieldDeclarationType)
         {
-            if (fieldDeclarationType.ToFullString().EndsWith("ReaderWriterLock"))
+            if (fieldDeclarationType.ToFullString().Trim().EndsWith("ReaderWriterLock"))
             {
                 context.ReportDiagnostic(Diagnostic.Create(Rule, memberDeclaration.GetLocation()));
             }
