@@ -9,10 +9,10 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace SmartAnalyzers.MultithreadingAnalyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class BoxedSpinLockAnalyzer : DiagnosticAnalyzer
+    public class ReadonlySpinLockAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "MT1005";
-        internal static readonly LocalizableString Title = "Boxed SpinLock is useless";
+        public const string DiagnosticId = "MT1015";
+        internal static readonly LocalizableString Title = "Readonly SpinLock is useless";
         internal static readonly LocalizableString MessageFormat = "SpinLock is a struct so `readonly` cause boxing which makes SpinLock useless.";
         internal const string Category = "Locking";
 

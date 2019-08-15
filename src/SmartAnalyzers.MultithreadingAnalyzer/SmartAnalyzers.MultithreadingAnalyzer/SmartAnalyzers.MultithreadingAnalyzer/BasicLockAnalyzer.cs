@@ -13,6 +13,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
+            context.EnableConcurrentExecution();
             context.RegisterSyntaxNodeAction(AnalyzeLockStatement, SyntaxKind.LockStatement);
             context.RegisterSyntaxNodeAction(AnalyzeMonitorEnterInvocation, SyntaxKind.InvocationExpression);
         }

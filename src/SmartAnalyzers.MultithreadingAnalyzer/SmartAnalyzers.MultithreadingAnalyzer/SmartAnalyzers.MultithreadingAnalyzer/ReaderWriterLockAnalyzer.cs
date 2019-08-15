@@ -10,7 +10,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ReaderWriterLockAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "MT1006";
+        public const string DiagnosticId = "MT1016";
         internal static readonly LocalizableString Title = "Replace ReaderWriterLock with ReaderWriterLockSlim";
         internal static readonly LocalizableString MessageFormat = "Consider using ReaderWriterLockSlim instead of ReaderWriterLock in order to avoid potential deadlocks";
         internal const string Category = "Locking";

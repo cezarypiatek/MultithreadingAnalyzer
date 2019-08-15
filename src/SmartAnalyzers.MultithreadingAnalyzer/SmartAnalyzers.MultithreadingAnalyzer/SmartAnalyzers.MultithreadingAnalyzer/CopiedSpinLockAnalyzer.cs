@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -11,7 +12,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class CopiedSpinLockAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "MT1004";
+        public const string DiagnosticId = "MT1014";
         internal static readonly LocalizableString Title = "Passed by value SpinLock is useless";
         internal static readonly LocalizableString MessageFormat = "SpinLock is a struct and passing it by value results with copy which makes SpinLock useless.";
         internal const string Category = "Locking";
@@ -29,7 +30,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
         }
 
         private void AnalyzeParameter(SyntaxNodeAnalysisContext context)
-        {
+        { 
             var parameter = (ParameterSyntax)context.Node;
             if (parameter.Type.ToFullString().Trim().EndsWith("SpinLock") && parameter.Modifiers.Any(x => x.Kind() == SyntaxKind.RefKeyword) == false)
             {

@@ -10,7 +10,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class MethodLevelSynchronizationAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "MT1002";
+        public const string DiagnosticId = "MT1010";
         internal static readonly LocalizableString Title = "Method level synchronization";
         internal static readonly LocalizableString MessageFormat = "Method level synchronization acquires lock on the whole instance or type and may cause a deadlock.";
         internal const string Category = "Locking";

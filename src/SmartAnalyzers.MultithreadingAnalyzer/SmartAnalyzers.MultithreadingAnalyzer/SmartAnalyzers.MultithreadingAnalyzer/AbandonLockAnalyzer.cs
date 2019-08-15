@@ -12,7 +12,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class AbandonLockAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "MT1003";
+        public const string DiagnosticId = "MT1013";
         internal static readonly LocalizableString Title = "Releasing lock without guarantee of execution";
         internal static readonly LocalizableString MessageFormat = "Releasing lock should always be wrapped in finally to ensure execution";
         internal const string Category = "Locking";
@@ -37,8 +37,8 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             new MethodDescriptor("System.Threading.ReaderWriterLockSlim.ExitWriteLock"),
             new MethodDescriptor("System.Threading.ReaderWriterLockSlim.ExitReadLock"),
             new MethodDescriptor("System.Threading.ReaderWriterLockSlim.ExitUpgradeableReadLock"),
-            new MethodDescriptor("System.Threading.ReaderWriterLock.ExitWriteLock"),
-            new MethodDescriptor("System.Threading.ReaderWriterLock.ExitReadLock"),
+            new MethodDescriptor("System.Threading.ReaderWriterLock.ReleaseReaderLock"),
+            new MethodDescriptor("System.Threading.ReaderWriterLock.ReleaseWriterLock"),
         };
 
         private void AnalyzeMonitorMethodInvocation(SyntaxNodeAnalysisContext context)
