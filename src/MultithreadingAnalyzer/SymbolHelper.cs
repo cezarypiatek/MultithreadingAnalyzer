@@ -28,7 +28,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             }
         }
 
-        public static bool CanBeAssignedTo(ITypeSymbol symbolInfoType, string baseType)
+        public static bool CanBeAssignedTo(ITypeSymbol symbolInfoType, string baseType, bool checkInheritance = true)
         {
             if (symbolInfoType == null)
             {
@@ -38,6 +38,11 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             if (symbolInfoType.ToString() == baseType)
             {
                 return true;
+            }
+
+            if (checkInheritance == false)
+            {
+
             }
             return CanBeAssignedTo(symbolInfoType.BaseType, baseType);
         }

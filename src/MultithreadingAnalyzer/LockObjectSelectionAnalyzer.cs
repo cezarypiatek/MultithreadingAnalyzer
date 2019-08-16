@@ -10,11 +10,11 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
     public partial class LockObjectSelectionAnalyzer : BasicLockAnalyzer
     {
         const string Category = "Locking";
-        static readonly DiagnosticDescriptor MT1000 = new DiagnosticDescriptor(nameof(MT1000), "Lock on publicly accessible member", "Locking on publicly accessible member can cause a deadlock'", Category, DiagnosticSeverity.Error, true);
-        static readonly DiagnosticDescriptor MT1001 = new DiagnosticDescriptor(nameof(MT1001), "Lock on this reference", "Locking on this reference can cause a deadlock", Category, DiagnosticSeverity.Error, true);
-        static readonly DiagnosticDescriptor MT1002 = new DiagnosticDescriptor(nameof(MT1002), "Lock on object with weak identity", "Locking on object with weak identity can cause a deadlock because their are implicitly shared across the application", Category, DiagnosticSeverity.Error, true);
-        static readonly DiagnosticDescriptor MT1003 = new DiagnosticDescriptor(nameof(MT1003), "Lock on non-readonly member", "Locking on non-readonly member can cause a deadlock'", Category, DiagnosticSeverity.Error, true);
-        static readonly DiagnosticDescriptor MT1004 = new DiagnosticDescriptor(nameof(MT1004), "Lock on value type instance", "Locking on value types prohibits any synchronization because they are boxed", Category, DiagnosticSeverity.Error, true);
+        public static readonly DiagnosticDescriptor MT1000 = new DiagnosticDescriptor(nameof(MT1000), "Lock on publicly accessible member", "Locking on publicly accessible member can cause a deadlock'", Category, DiagnosticSeverity.Error, true);
+        public static readonly DiagnosticDescriptor MT1001 = new DiagnosticDescriptor(nameof(MT1001), "Lock on this reference", "Locking on this reference can cause a deadlock", Category, DiagnosticSeverity.Error, true);
+        public static readonly DiagnosticDescriptor MT1002 = new DiagnosticDescriptor(nameof(MT1002), "Lock on object with weak identity", "Locking on object with weak identity can cause a deadlock because their are implicitly shared across the application", Category, DiagnosticSeverity.Error, true);
+        public static readonly DiagnosticDescriptor MT1003 = new DiagnosticDescriptor(nameof(MT1003), "Lock on non-readonly member", "Locking on non-readonly member can cause a deadlock'", Category, DiagnosticSeverity.Error, true);
+        public static readonly DiagnosticDescriptor MT1004 = new DiagnosticDescriptor(nameof(MT1004), "Lock on value type instance", "Locking on value types prohibits any synchronization because they are boxed", Category, DiagnosticSeverity.Error, true);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => 
             ImmutableArray.Create(MT1001, MT1000, MT1003, MT1004, MT1002);
@@ -39,13 +39,11 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             if (IsLockOnNonReadonlyViolated(expressionKind, symbolInfo))
             {
                 ReportViolation(context, expression, MT1003);
-                return;
             }
 
             if (IsLockPubliclyAccessibleMemberViolated(expressionKind, symbolInfo))
             {
                 ReportViolation(context, expression, MT1000);
-                return;
             }
 
             var typeInfo = context.SemanticModel.GetTypeInfo(expression);
@@ -73,9 +71,9 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
                 case TypeKind.TypeParameter:
                     return
                         typeInfo.Type.SpecialType == SpecialType.System_String || 
-                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.ExecutionEngineException") || 
-                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.OutOfMemoryException") || 
-                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.StackOverflowException") || 
+                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.ExecutionEngineException", checkInheritance: false) || 
+                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.OutOfMemoryException", checkInheritance: false) || 
+                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.StackOverflowException", checkInheritance: false) || 
                         SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.MarshalByRefObject") || 
                         SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.Reflection.MemberInfo") || 
                         SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.Reflection.ParameterInfo") || 
