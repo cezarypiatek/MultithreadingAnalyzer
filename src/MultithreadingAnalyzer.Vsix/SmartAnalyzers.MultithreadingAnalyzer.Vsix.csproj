@@ -54,7 +54,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SmartAnalyzers.MultithreadingAnalyzer\SmartAnalyzers.MultithreadingAnalyzer.csproj">
+    <ProjectReference Include="..\MultithreadingAnalyzer\SmartAnalyzers.MultithreadingAnalyzer.csproj">
       <Project>{7FE64323-69FA-4DFC-939F-D53656D6499D}</Project>
       <Name>SmartAnalyzers.MultithreadingAnalyzer</Name>
     </ProjectReference>
