@@ -9,16 +9,16 @@
   <PropertyGroup>
     <PackageId>SmartAnalyzers.MultithreadingAnalyzer</PackageId>
     <PackageVersion>1.0.0.0</PackageVersion>
-    <Authors>Cezar</Authors>
-    <PackageLicenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</PackageLicenseUrl>
-    <PackageProjectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</PackageProjectUrl>
-    <PackageIconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</PackageIconUrl>
-    <RepositoryUrl>http://REPOSITORY_URL_HERE_OR_DELETE_THIS_LINE</RepositoryUrl>
+    <Authors>Cezary Piatek</Authors>
+    <PackageLicenseUrl>https://github.com/smartanalyzers/MultithreadingAnalyzer/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/smartanalyzers/MultithreadingAnalyzer</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/smartanalyzers/MultithreadingAnalyzer/raw/master/doc/logo.jpg</PackageIconUrl>
+    <RepositoryUrl>https://github.com/smartanalyzers/MultithreadingAnalyzer</RepositoryUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>SmartAnalyzers.MultithreadingAnalyzer</Description>
-    <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
+    <Description>A set of Roslyn analyzers related to multithreading</Description>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <Copyright>Copyright</Copyright>
-    <PackageTags>SmartAnalyzers.MultithreadingAnalyzer, analyzers</PackageTags>
+    <PackageTags>SmartAnalyzers.MultithreadingAnalyzer, analyzers, multithreading</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
   </PropertyGroup>
 
