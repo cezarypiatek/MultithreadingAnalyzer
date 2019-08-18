@@ -71,13 +71,11 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
                 case TypeKind.TypeParameter:
                     return
                         typeInfo.Type.SpecialType == SpecialType.System_String || 
-                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.ExecutionEngineException", checkInheritance: false) || 
-                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.OutOfMemoryException", checkInheritance: false) || 
-                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.StackOverflowException", checkInheritance: false) || 
+                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.Exception") || 
                         SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.MarshalByRefObject") || 
                         SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.Reflection.MemberInfo") || 
                         SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.Reflection.ParameterInfo") || 
-                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.Threading.Thread");
+                        SymbolHelper.CanBeAssignedTo(typeInfo.Type, "System.Runtime.ConstrainedExecution.CriticalFinalizerObject");
                 default:
                     return false;
             }

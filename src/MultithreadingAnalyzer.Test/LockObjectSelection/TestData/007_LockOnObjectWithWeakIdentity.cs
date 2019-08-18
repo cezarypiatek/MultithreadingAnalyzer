@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 
 namespace SmartAnalyzers.MultithreadingAnalyzer.Test.LockObjectSelection.TestData
@@ -114,6 +116,90 @@ namespace SmartAnalyzers.MultithreadingAnalyzer.Test.LockObjectSelection.TestDat
             if (wasTaken)
             {
                 Monitor.Exit(lockTString);
+            }
+        }
+
+        
+        private readonly ParameterInfo parameterInfoLock = typeof(_007_LockOnObjectWithWeakIdentity)
+            .GetMethod(nameof(DoSth14)).GetParameters().First();
+
+        public void DoSth14(int param)
+        {
+            lock (parameterInfoLock)
+            {
+
+            }
+        }
+
+        public void DoSth15()
+        {
+            Monitor.Enter(parameterInfoLock);
+            Monitor.Exit(parameterInfoLock);
+        }
+
+        public void DoSth16()
+        {
+            var wasTaken = false;
+            Monitor.TryEnter(parameterInfoLock, ref wasTaken);
+            if (wasTaken)
+            {
+                Monitor.Exit(parameterInfoLock);
+            }
+        }
+
+        public class Worker : MarshalByRefObject
+        {
+        }
+
+        private readonly Worker marshalByRefLock = new Worker();
+
+        public void DoSth17()
+        {
+            lock (marshalByRefLock)
+            {
+
+            }
+        }
+
+        public void DoSth18()
+        {
+            Monitor.Enter(marshalByRefLock);
+            Monitor.Exit(marshalByRefLock);
+        }
+
+        public void DoSth19()
+        {
+            var wasTaken = false;
+            Monitor.TryEnter(marshalByRefLock, ref wasTaken);
+            if (wasTaken)
+            {
+                Monitor.Exit(marshalByRefLock);
+            }
+        }
+
+        private readonly Exception exceptionLock = new OutOfMemoryException();
+
+        public void DoSth20()
+        {
+            lock (exceptionLock)
+            {
+
+            }
+        }
+
+        public void DoSth21()
+        {
+            Monitor.Enter(exceptionLock);
+            Monitor.Exit(exceptionLock);
+        }
+
+        public void DoSth22()
+        {
+            var wasTaken = false;
+            Monitor.TryEnter(exceptionLock, ref wasTaken);
+            if (wasTaken)
+            {
+                Monitor.Exit(exceptionLock);
             }
         }
     }

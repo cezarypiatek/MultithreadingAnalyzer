@@ -110,79 +110,133 @@ namespace SmartAnalyzers.MultithreadingAnalyzer.Test.LockObjectSelection
         [Test]
         public void do_not_lock_on_typeof()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 12, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 14, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_lock_on_type_object()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 20, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 22, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_monitor_on_type_object()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 28, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 30, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_monitor_try_on_type_object()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 35, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 37, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_lock_on_value_array()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 46, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 48, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_monitor_on_value_array()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 54, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 56, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_monitor_try_on_value_array()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 61, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 63, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_lock_on_thread()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 72, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 74, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_monitor_on_thread()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 80, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 82, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_monitor_try_on_thread()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 87, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 89, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_lock_on_string()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 98, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 100, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_monitor_on_string()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 106, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 108, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         [Test]
         public void do_not_monitor_try_on_string()
         {
-            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 113, nameof(LockObjectSelectionAnalyzer.MT1002));
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 115, nameof(LockObjectSelectionAnalyzer.MT1002));
+        }
+
+        [Test]
+        public void do_not_lock_on_parameter_info()
+        {
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 128, nameof(LockObjectSelectionAnalyzer.MT1002));
+        }
+
+        [Test]
+        public void do_not_monitor_on_parameter_info()
+        {
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 136, nameof(LockObjectSelectionAnalyzer.MT1002));
+        }
+
+        [Test]
+        public void do_not_monitor_try_on_parameter_info()
+        {
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 143, nameof(LockObjectSelectionAnalyzer.MT1002));
+        }
+
+        [Test]
+        public void do_not_lock_on_marshal_by_ref()
+        {
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 158, nameof(LockObjectSelectionAnalyzer.MT1002));
+        }
+
+        [Test]
+        public void do_not_monitor_on_marshal_by_ref()
+        {
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 166, nameof(LockObjectSelectionAnalyzer.MT1002));
+        }
+
+        [Test]
+        public void do_not_monitor_try_on_marshal_by_ref()
+        {
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 184, nameof(LockObjectSelectionAnalyzer.MT1002));
+        }
+
+        [Test]
+        public void do_not_lock_on_exception()
+        {
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 158, nameof(LockObjectSelectionAnalyzer.MT1002));
+        }
+
+        [Test]
+        public void do_not_monitor_on_exception()
+        {
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 192, nameof(LockObjectSelectionAnalyzer.MT1002));
+        }
+
+        [Test]
+        public void do_not_monitor_try_on_exception()
+        {
+            HasDiagnostic(TestCases._007_LockOnObjectWithWeakIdentity, 199, nameof(LockObjectSelectionAnalyzer.MT1002));
         }
 
         protected void HasDiagnostic(string code, int line, string diagnosticId)
