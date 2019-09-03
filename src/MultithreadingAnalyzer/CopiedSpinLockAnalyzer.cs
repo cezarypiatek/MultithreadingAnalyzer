@@ -32,6 +32,12 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
         private void AnalyzeParameter(SyntaxNodeAnalysisContext context)
         { 
             var parameter = (ParameterSyntax)context.Node;
+
+            if (parameter.Type == null)
+            {
+                return;
+            }
+
             if (parameter.Type.ToFullString().Trim().EndsWith("SpinLock") && parameter.Modifiers.Any(x => x.Kind() == SyntaxKind.RefKeyword) == false)
             {
                 context.ReportDiagnostic(Diagnostic.Create(Rule, parameter.GetLocation()));
