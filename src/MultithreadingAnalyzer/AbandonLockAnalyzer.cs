@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Immutable;
-using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -12,20 +11,17 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class AbandonLockAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "MT1013";
-        internal static readonly LocalizableString Title = "Releasing lock without guarantee of execution";
-        internal static readonly LocalizableString MessageFormat = "Releasing lock should always be wrapped in finally to ensure execution";
         internal const string Category = "Locking";
 
-        internal static DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Error, true);
+        internal static readonly DiagnosticDescriptor MT1012 = new DiagnosticDescriptor(nameof(MT1012), "Acquiring lock without guarantee of releasing", (LocalizableString) "Acquiring lock should always be wrapped in try block to ensure execution", Category, DiagnosticSeverity.Error, true);
+        internal static readonly DiagnosticDescriptor MT1013 = new DiagnosticDescriptor(nameof(MT1013), "Releasing lock without guarantee of execution", (LocalizableString) "Releasing lock should always be wrapped in finally block to ensure execution", Category, DiagnosticSeverity.Error, true);
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(MT1012, MT1013);
 
         public override void Initialize(AnalysisContext context)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
-            //TODO: Verify if Monitor.Enter is right before try or inside
             context.RegisterSyntaxNodeAction(AnalyzeMonitorMethodInvocation, SyntaxKind.InvocationExpression);
         }
 
@@ -41,28 +37,61 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             new MethodDescriptor("System.Threading.ReaderWriterLock.ReleaseWriterLock"),
         };
 
+        private static readonly MethodDescriptor[] MethodsThatRequireTry = 
+        {
+            new MethodDescriptor("System.Threading.Monitor.Enter"),
+            new MethodDescriptor("System.Threading.Monitor.TryEnter"),
+            new MethodDescriptor("System.Threading.SpinLock.Enter"),
+            new MethodDescriptor("System.Threading.SpinLock.TryEnter"),
+            new MethodDescriptor("System.Threading.Mutex.WaitOne"),
+            new MethodDescriptor("System.Threading.ReaderWriterLockSlim.EnterWriteLock"),
+            new MethodDescriptor("System.Threading.ReaderWriterLockSlim.EnterReadLock"),
+            new MethodDescriptor("System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock"),
+            new MethodDescriptor("System.Threading.ReaderWriterLock.AcquireReaderLock"),
+            new MethodDescriptor("System.Threading.ReaderWriterLock.AcquireWriterLock"),
+        };
+
         private void AnalyzeMonitorMethodInvocation(SyntaxNodeAnalysisContext context)
         {
             var invocationExpression = (InvocationExpressionSyntax)context.Node;
             if (ExpressionHelpers.IsInvocationOf(context, MethodsThatRequireFinally))
             {
-                TryReportViolation(context, invocationExpression.Parent, invocationExpression);
+                TryReportLockReleaseWithoutExecutionGuarantee(context, invocationExpression.Parent, invocationExpression);
+            }else if (ExpressionHelpers.IsInvocationOf(context, MethodsThatRequireTry))
+            {
+                TryReportLockAcquiredWithoutReleaseGuarantee(context, invocationExpression.Parent, invocationExpression);
             }
         }
 
-        private void TryReportViolation(SyntaxNodeAnalysisContext context, SyntaxNode memberAccessParent, SyntaxNode monitorExitExpression)
+        private void TryReportLockAcquiredWithoutReleaseGuarantee(SyntaxNodeAnalysisContext context, SyntaxNode parentSyntaxNode, InvocationExpressionSyntax acquiredExpression)
         {
-            if (memberAccessParent is FinallyClauseSyntax)
+            if (parentSyntaxNode is TryStatementSyntax)
             {
                 return;
             }
-            if (memberAccessParent is MethodDeclarationSyntax methodDeclaration && methodDeclaration.Parent is TypeDeclarationSyntax)
+            if (parentSyntaxNode is MethodDeclarationSyntax methodDeclaration && methodDeclaration.Parent is TypeDeclarationSyntax)
             {
-                context.ReportDiagnostic(Diagnostic.Create(Rule, monitorExitExpression.GetLocation()));     
+                context.ReportDiagnostic(Diagnostic.Create(MT1012, acquiredExpression.GetLocation()));
             }
-            else if(memberAccessParent.Parent !=null)
+            else if (parentSyntaxNode.Parent != null)
             {
-                TryReportViolation(context, memberAccessParent.Parent, monitorExitExpression);
+                TryReportLockAcquiredWithoutReleaseGuarantee(context, parentSyntaxNode.Parent, acquiredExpression);
+            }
+        }
+
+        private void TryReportLockReleaseWithoutExecutionGuarantee(SyntaxNodeAnalysisContext context, SyntaxNode parentSyntaxNode, SyntaxNode releaseExpression)
+        {
+            if (parentSyntaxNode is FinallyClauseSyntax)
+            {
+                return;
+            }
+            if (parentSyntaxNode is MethodDeclarationSyntax methodDeclaration && methodDeclaration.Parent is TypeDeclarationSyntax)
+            {
+                context.ReportDiagnostic(Diagnostic.Create(MT1013, releaseExpression.GetLocation()));     
+            }
+            else if(parentSyntaxNode.Parent !=null)
+            {
+                TryReportLockReleaseWithoutExecutionGuarantee(context, parentSyntaxNode.Parent, releaseExpression);
             }
         }
     }
