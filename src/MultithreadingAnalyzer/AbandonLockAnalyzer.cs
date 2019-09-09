@@ -13,8 +13,8 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
     {
         internal const string Category = "Locking";
 
-        internal static readonly DiagnosticDescriptor MT1012 = new DiagnosticDescriptor(nameof(MT1012), "Acquiring lock without guarantee of releasing", (LocalizableString) "Acquiring lock should always be wrapped in try block to ensure execution", Category, DiagnosticSeverity.Error, true);
-        internal static readonly DiagnosticDescriptor MT1013 = new DiagnosticDescriptor(nameof(MT1013), "Releasing lock without guarantee of execution", (LocalizableString) "Releasing lock should always be wrapped in finally block to ensure execution", Category, DiagnosticSeverity.Error, true);
+        public static readonly DiagnosticDescriptor MT1012 = new DiagnosticDescriptor(nameof(MT1012), "Acquiring lock without guarantee of releasing", (LocalizableString) "Acquiring lock should always be wrapped in try block to ensure execution", Category, DiagnosticSeverity.Error, true);
+        public static readonly DiagnosticDescriptor MT1013 = new DiagnosticDescriptor(nameof(MT1013), "Releasing lock without guarantee of execution", (LocalizableString) "Releasing lock should always be wrapped in finally block to ensure execution", Category, DiagnosticSeverity.Error, true);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(MT1012, MT1013);
 
@@ -43,7 +43,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             new MethodDescriptor("System.Threading.Monitor.TryEnter"),
             new MethodDescriptor("System.Threading.SpinLock.Enter"),
             new MethodDescriptor("System.Threading.SpinLock.TryEnter"),
-            new MethodDescriptor("System.Threading.Mutex.WaitOne"),
+            new MethodDescriptor("System.Threading.WaitHandle.WaitOne"),
             new MethodDescriptor("System.Threading.ReaderWriterLockSlim.EnterWriteLock"),
             new MethodDescriptor("System.Threading.ReaderWriterLockSlim.EnterReadLock"),
             new MethodDescriptor("System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock"),

@@ -39,6 +39,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="AbandonLock\TestCases.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestCases.resx</DependentUpon>
+    </Compile>
     <Compile Update="LockObjectSelection\TestCases.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -52,6 +57,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="AbandonLock\TestCases.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestCases.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="LockObjectSelection\TestCases.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TestCases.Designer.cs</LastGenOutput>
