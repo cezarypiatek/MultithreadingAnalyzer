@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SmartAnalyzers.MultithreadingAnalyzer.Test.AbandonLock {
+namespace SmartAnalyzers.MultithreadingAnalyzer.Test.CopiedSpinLock {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer.Test.AbandonLock {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SmartAnalyzers.MultithreadingAnalyzer.Test.AbandonLock.TestCases", typeof(TestCases).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SmartAnalyzers.MultithreadingAnalyzer.Test.CopiedSpinLock.TestCases", typeof(TestCases).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,95 +63,52 @@ namespace SmartAnalyzers.MultithreadingAnalyzer.Test.AbandonLock {
         /// <summary>
         ///   Looks up a localized string similar to using System.Threading;
         ///
-        ///namespace SmartAnalyzers.MultithreadingAnalyzer.Test.AbandonLock.TestData
+        ///namespace SmartAnalyzers.MultithreadingAnalyzer.Test.CopiedSpinLock.TestData
         ///{
-        ///    class _001_LockAcquiredOutsideTryClause
+        ///    class _001_SpinLockPassByValue
         ///    {
-        ///        private readonly object myLockObj = new object();
-        ///
-        ///        public void DoSth1()
+        ///        public _001_SpinLockPassByValue(SpinLock spinLock)
         ///        {
-        ///            Monitor.Enter(myLockObj);
-        ///            try
-        ///            {
-        ///
-        ///            }
-        ///            finally
-        ///            {
-        ///                Monitor.Exit(myLockObj);
-        ///            }
+        ///            
         ///        }
         ///
-        ///        public void DoSth2()
+        ///        public void SynchronizeWith(SpinLock spinLock)
         ///        {
-        ///            var lo [rest of string was truncated]&quot;;.
+        ///
+        ///        }
+        ///    }
+        ///
+        ///    class SampleSpinlockWrapper1
+        ///    {
+        ///        public SampleSpinlockWrapper1(ref SpinLock spinLock)
+        ///        {
+        ///            
+        ///        }
+        ///
+        ///        public void SynchronizeWi [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string _001_LockAcquiredOutsideTryClause {
+        internal static string _001_SpinLockPassByValue {
             get {
-                return ResourceManager.GetString("_001_LockAcquiredOutsideTryClause", resourceCulture);
+                return ResourceManager.GetString("_001_SpinLockPassByValue", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to using System.Threading;
         ///
-        ///namespace SmartAnalyzers.MultithreadingAnalyzer.Test.AbandonLock.TestData
+        ///namespace SmartAnalyzers.MultithreadingAnalyzer.Test.CopiedSpinLock.TestData
         ///{
-        ///    class _002_LockAcquiredInsideTryClause
+        ///    class _002_ReadonlySpinLock
         ///    {
-        ///        private readonly object myLockObj = new object();
-        ///
-        ///        public void DoSth1()
-        ///        {
-        ///            try
-        ///            {
-        ///                Monitor.Enter(myLockObj);
-        ///            }
-        ///            finally
-        ///            {
-        ///                Monitor.Exit(myLockObj);
-        ///            }
-        ///        }
-        ///
-        ///        public void DoSth2()
-        ///        {
-        ///            var l [rest of string was truncated]&quot;;.
+        ///        private readonly SpinLock InvalidSpinLock = new SpinLock();
+        ///        private SpinLock ValidSpinLock = new SpinLock();
+        ///    }
+        ///}
+        ///.
         /// </summary>
-        internal static string _002_LockAcquiredInsideTryClause {
+        internal static string _002_ReadonlySpinLock {
             get {
-                return ResourceManager.GetString("_002_LockAcquiredInsideTryClause", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to using System.Threading;
-        ///
-        ///namespace SmartAnalyzers.MultithreadingAnalyzer.Test.AbandonLock.TestData
-        ///{
-        ///    class _003_LockReleasedOutsideFinallyClause
-        ///    {
-        ///        private readonly object myLockObj = new object();
-        ///
-        ///        public void DoSth1()
-        ///        {
-        ///            Monitor.Enter(myLockObj);
-        ///            try
-        ///            {
-        ///
-        ///            }
-        ///            finally
-        ///            {
-        ///                Monitor.Exit(myLockObj);
-        ///            }
-        ///        }
-        ///
-        ///        public void DoSth2()
-        ///        {
-        ///            va [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string _003_LockReleasedOutsideFinallyClause {
-            get {
-                return ResourceManager.GetString("_003_LockReleasedOutsideFinallyClause", resourceCulture);
+                return ResourceManager.GetString("_002_ReadonlySpinLock", resourceCulture);
             }
         }
     }
