@@ -23,6 +23,9 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
 
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+            context.EnableConcurrentExecution();
+
             context.RegisterSyntaxNodeAction(AnalyzeParameter, SyntaxKind.Parameter);
             context.RegisterSyntaxNodeAction(AnalyzeField, SyntaxKind.FieldDeclaration);
             context.RegisterSyntaxNodeAction(AnalyzeProperty, SyntaxKind.PropertyDeclaration);

@@ -12,7 +12,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
     {
         internal const string Category = "Locking";
 
-        public static DiagnosticDescriptor MT1016 = new DiagnosticDescriptor(nameof(MT1016), "Replace ReaderWriterLock with ReaderWriterLockSlim", (LocalizableString) "Consider using ReaderWriterLockSlim instead of ReaderWriterLock in order to avoid potential deadlocks", Category, DiagnosticSeverity.Warning, true);
+        public static DiagnosticDescriptor MT1016 = new DiagnosticDescriptor(nameof(MT1016), "Replace ReaderWriterLock with ReaderWriterLockSlim", "Consider using ReaderWriterLockSlim instead of ReaderWriterLock in order to avoid potential deadlocks", Category, DiagnosticSeverity.Warning, true);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(MT1016);
 
@@ -20,6 +20,9 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
+
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+            context.EnableConcurrentExecution();
 
             context.RegisterSyntaxNodeAction(AnalyzeField, SyntaxKind.FieldDeclaration);
             context.RegisterSyntaxNodeAction(AnalyzeProperty, SyntaxKind.PropertyDeclaration);
