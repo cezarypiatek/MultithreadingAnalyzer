@@ -8,21 +8,21 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace SmartAnalyzers.MultithreadingAnalyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class ReaderWriterLockAnalyzer : DiagnosticAnalyzer
+    public class DeprecatedReaderWriterLockAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "MT1016";
-        internal static readonly LocalizableString Title = "Replace ReaderWriterLock with ReaderWriterLockSlim";
-        internal static readonly LocalizableString MessageFormat = "Consider using ReaderWriterLockSlim instead of ReaderWriterLock in order to avoid potential deadlocks";
         internal const string Category = "Locking";
 
-        internal static DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true);
+        public static DiagnosticDescriptor MT1016 = new DiagnosticDescriptor(nameof(MT1016), "Replace ReaderWriterLock with ReaderWriterLockSlim", "Consider using ReaderWriterLockSlim instead of ReaderWriterLock in order to avoid potential deadlocks", Category, DiagnosticSeverity.Warning, true);
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(MT1016);
 
         public override void Initialize(AnalysisContext context)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
+
+            context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+            context.EnableConcurrentExecution();
 
             context.RegisterSyntaxNodeAction(AnalyzeField, SyntaxKind.FieldDeclaration);
             context.RegisterSyntaxNodeAction(AnalyzeProperty, SyntaxKind.PropertyDeclaration);
@@ -45,7 +45,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
         {
             if (fieldDeclarationType.ToFullString().Trim().EndsWith("ReaderWriterLock"))
             {
-                context.ReportDiagnostic(Diagnostic.Create(Rule, memberDeclaration.GetLocation()));
+                context.ReportDiagnostic(Diagnostic.Create(MT1016, memberDeclaration.GetLocation()));
             }
         }
     }

@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AbandonLock\TestData\001_LockAcquiredOutsideTryClause.cs" />
+    <Compile Remove="AbandonLock\TestData\002_LockAcquiredInsideTryClause.cs" />
+    <Compile Remove="AbandonLock\TestData\003_LockReleasedOutsideFinallyClause.cs" />
+    <Compile Remove="CopiedSpinLock\TestData\001_SpinLockPassByValue.cs" />
+    <Compile Remove="CopiedSpinLock\TestData\002_ReadonlySpinLock.cs" />
+    <Compile Remove="DeprecatedReaderWriterLock\TestData\001_ReaderWriterLock.cs" />
     <Compile Remove="LockObjectSelection\TestData\001_LockOnNonReadonlyField.cs" />
     <Compile Remove="LockObjectSelection\TestData\002_LockOnNonReadonlyProperty.cs" />
     <Compile Remove="LockObjectSelection\TestData\003_LockOnPublicField.cs" />
@@ -12,6 +18,15 @@
     <Compile Remove="LockObjectSelection\TestData\005_LockOnThisInstance.cs" />
     <Compile Remove="LockObjectSelection\TestData\006_LockOnValueType.cs" />
     <Compile Remove="MethodLevelSynchronization\TestData\001_MethodLevelSyncrhonization.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="AbandonLock\TestData\001_LockAcquiredOutsideTryClause.cs" />
+    <None Include="AbandonLock\TestData\002_LockAcquiredInsideTryClause.cs" />
+    <None Include="AbandonLock\TestData\003_LockReleasedOutsideFinallyClause.cs" />
+    <None Include="CopiedSpinLock\TestData\001_SpinLockPassByValue.cs" />
+    <None Include="CopiedSpinLock\TestData\002_ReadonlySpinLock.cs" />
+    <Content Include="DeprecatedReaderWriterLock\TestData\001_ReaderWriterLock.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,9 +43,10 @@
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="2.4.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.4.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.14.0" />
-    <PackageReference Include="RoslynNUnitLight.NetStandard" Version="1.2.5" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="SmartAnalyzers.RoslynTestKit" Version="2.0.27" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +54,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="AbandonLock\TestCases.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestCases.resx</DependentUpon>
+    </Compile>
+    <Compile Update="CopiedSpinLock\TestCases.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestCases.resx</DependentUpon>
+    </Compile>
+    <Compile Update="DeprecatedReaderWriterLock\TestCases.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TestCases.resx</DependentUpon>
+    </Compile>
     <Compile Update="LockObjectSelection\TestCases.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -51,6 +82,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="AbandonLock\TestCases.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestCases.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="CopiedSpinLock\TestCases.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestCases.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="DeprecatedReaderWriterLock\TestCases.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestCases.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="LockObjectSelection\TestCases.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TestCases.Designer.cs</LastGenOutput>
