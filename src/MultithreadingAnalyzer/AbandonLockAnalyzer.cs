@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Immutable;
+using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -46,7 +47,7 @@ namespace SmartAnalyzers.MultithreadingAnalyzer
             new MethodDescriptor("System.Threading.Monitor.TryEnter"),
             new MethodDescriptor("System.Threading.SpinLock.Enter"),
             new MethodDescriptor("System.Threading.SpinLock.TryEnter"),
-            new MethodDescriptor("System.Threading.WaitHandle.WaitOne"),
+            new MethodDescriptor("System.Threading.Mutex.WaitOne"),
             new MethodDescriptor("System.Threading.ReaderWriterLockSlim.EnterWriteLock"),
             new MethodDescriptor("System.Threading.ReaderWriterLockSlim.EnterReadLock"),
             new MethodDescriptor("System.Threading.ReaderWriterLockSlim.EnterUpgradeableReadLock"),
