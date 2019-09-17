@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -17,16 +14,16 @@ namespace SmartAnalyzers.MultithreadingAnalyzer.Utils
             if (invocationExpression.Expression is MemberAccessExpressionSyntax memberAccess)
             {
                 var text = memberAccess.ToFullString().Trim();
-                Lazy<ImmutableArray<ISymbol>> symbols = new Lazy<ImmutableArray<ISymbol>>(() =>
+                Lazy<ITypeSymbol> symbols = new Lazy<ITypeSymbol>(() =>
                 {
-                    var symbolInfo = context.SemanticModel.GetSymbolInfo(memberAccess);
-                    return symbolInfo.Symbol != null ? ImmutableArray.Create(symbolInfo.Symbol) : symbolInfo.CandidateSymbols;
+                    var typeInfo = context.SemanticModel.GetTypeInfo(memberAccess.Expression);
+                    return typeInfo.Type;
                 });
                 for (int i = 0; i < candidates.Length; i++)
                 {
                     if (text == candidates[i].Name || text.EndsWith($".{candidates[i].Name}"))
                     {
-                        if(symbols.Value.Any(symbol => symbol.Name == candidates[i].Name && symbol.ContainingType.ToString() == candidates[i].TypeFullName))
+                        if(symbols.Value?.ToDisplayString() == candidates[i].TypeFullName)
                         {
                             return true;
                         }
